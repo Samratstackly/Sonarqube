@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        sonarQubeScanner 'sonar-scanner'
+    }
+
     environment {
         SONARQUBE = 'SonarQube'
     }
@@ -43,12 +47,6 @@ pipeline {
                 dir('frontend') {
                     sh 'npm run build'
                 }
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploy step'
             }
         }
     }
