@@ -7,12 +7,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/Samratstackly/Sonarqube.git'
-            }
-        }
-
         stage('Check Node') {
             steps {
                 sh 'node -v'
@@ -54,7 +48,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deploy step here'
+                echo 'Deploy step'
             }
         }
     }
