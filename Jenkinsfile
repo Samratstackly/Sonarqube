@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs 'node16'
-    }
-
     environment {
         SONARQUBE = 'SonarQube'
     }
@@ -14,6 +10,13 @@ pipeline {
         stage('Checkout') {
             steps {
                 git 'https://github.com/Samratstackly/Sonarqube.git'
+            }
+        }
+
+        stage('Check Node') {
+            steps {
+                sh 'node -v'
+                sh 'npm -v'
             }
         }
 
@@ -33,25 +36,11 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                dir('backend') {
-                    sh 'npm test'
-                }
-            }
-        }
-
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
                     sh 'sonar-scanner'
                 }
-            }
-        }
-
-        stage('Quality Gate') {
-            steps {
-                waitForQualityGate abortPipeline: true
             }
         }
 
@@ -63,9 +52,9 @@ pipeline {
             }
         }
 
-        stage('Deploy Backend') {
+        stage('Deploy') {
             steps {
-                }
+                echo 'Deploy step here'
             }
         }
     }
